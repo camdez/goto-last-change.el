@@ -4,12 +4,16 @@
 
 ;; Author: Kevin Rodgers <ihs_4664@yahoo.com>
 ;; Created: 17 Jun 2003
-;; Version: $Revision: 1.2 $
+;; Version: 1.2.0
 ;; Keywords: convenience
-;; RCS: $Id: goto-last-change.el,v 1.2 2003/07/30 17:43:47 kevinr Exp kevinr $
+;; Homepage: https://github.com/camdez/goto-last-change.el
 
 ;; Contributors:
 ;;   Attila Lendvai <attila.lendvai@gmail.com> (line distance and auto marks)
+
+;; This file is NOT part of GNU Emacs.
+
+;;; License:
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as

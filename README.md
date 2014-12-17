@@ -1,5 +1,7 @@
 # goto-last-change.el
 
+[![MELPA][1]][2]
+
 An Emacs package to move point through buffer-undo-list positions.
 
 ## Contributors
@@ -28,3 +30,6 @@ a working development machine so I can't handle the Git upload and
 tagging.  I'd really appreciate it if you would take care of that and
 host goto-last-change.el on MELPA.
 ```
+
+[1]: http://melpa.org/packages/goto-last-change-badge.svg
+[2]: http://melpa.org/#/goto-last-change

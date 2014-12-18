@@ -1,6 +1,6 @@
 # goto-last-change.el
 
-[![MELPA][1]][2]
+[![MELPA][1]][2] [![MELPA Stable][3]][4]
 
 An Emacs package to move point through buffer-undo-list positions.
 
@@ -33,3 +33,5 @@ host goto-last-change.el on MELPA.
 
 [1]: http://melpa.org/packages/goto-last-change-badge.svg
 [2]: http://melpa.org/#/goto-last-change
+[3]: http://stable.melpa.org/packages/goto-last-change-badge.svg
+[4]: http://stable.melpa.org/#/goto-last-change

@@ -42,7 +42,7 @@
 ;; You may also want to bind a key to `M-x goto-last-change', e.g.
 ;;      (global-set-key "\C-x\C-\\" 'goto-last-change)
 
-;; goto-last-change.el was written in response to to the following:
+;; goto-last-change.el was written in response to the following:
 ;;
 ;; From: Dan Jacobson <jidanni@jidanni.org>
 ;; Newsgroups: gnu.emacs.bug
@@ -65,7 +65,6 @@
 ;; http://jidanni.org/ Taiwan(04)25854780
 
 ;;; Code:
-(provide 'goto-last-change)
 
 (or (fboundp 'last)                     ; Emacs 20
     (require 'cl))                      ; Emacs 19
@@ -82,20 +81,18 @@ With a prefix arg (optional arg MARK-POINT non-nil), set mark so \
 \\[exchange-point-and-mark]
 will return point to the current position."
   (interactive "P")
-  ;; (unless (buffer-modified-p)
-  ;;   (error "Buffer not modified"))
   (when (eq buffer-undo-list t)
     (error "No undo information in this buffer"))
   (when mark-point
     (push-mark))
   (unless minimal-line-distance
     (setq minimal-line-distance 10))
-  (let ((position nil)
+  (let (position
+        undo
         (undo-list (if (and (eq this-command last-command)
                             goto-last-change-undo)
                        (cdr (memq goto-last-change-undo buffer-undo-list))
-                     buffer-undo-list))
-        undo)
+                     buffer-undo-list)))
     (while (and undo-list
                 (or (not position)
                     (eql position (point))
@@ -133,13 +130,12 @@ will return point to the current position."
            (error "Buffer not modified")))))
 
 (defun goto-last-change-with-auto-marks (&optional minimal-line-distance)
-  "Calls goto-last-change and sets the mark at only the first invocations
-in a sequence of invocations."
+  "Calls goto-last-change and sets the mark at only the first
+invocations in a sequence of invocations."
   (interactive "P")
   (goto-last-change (not (or (eq last-command 'goto-last-change-with-auto-marks)
                              (eq last-command t)))
                     minimal-line-distance))
 
-;; (global-set-key "\C-x\C-\\" 'goto-last-change)
-
+(provide 'goto-last-change)
 ;;; goto-last-change.el ends here

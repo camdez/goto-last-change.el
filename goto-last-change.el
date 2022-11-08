@@ -69,6 +69,11 @@
 (or (fboundp 'last)                     ; Emacs 20
     (require 'cl))                      ; Emacs 19
 
+(defcustom default-minimal-line-distance 10
+  "Movements smaller this amount of lines will be ignored"
+  :type 'natnum
+  :group 'goto-last-change)
+
 (defvar goto-last-change-undo nil
   "The `buffer-undo-list' entry of the previous \\[goto-last-change] command.")
 (make-variable-buffer-local 'goto-last-change-undo)
@@ -86,7 +91,7 @@ will return point to the current position."
   (when mark-point
     (push-mark))
   (unless minimal-line-distance
-    (setq minimal-line-distance 10))
+    (setq minimal-line-distance default-minimal-line-distance))
   (let (position
         undo
         (undo-list (if (and (eq this-command last-command)

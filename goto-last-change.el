@@ -110,8 +110,9 @@ MINIMAL-LINE-DISTANCE defaults to `goto-last-change-minimal-line-distance'."
                 (or (not position)
                     (eql position (point))
                     (and minimal-line-distance
-                         ;; The first invocation always goes to the last change, subsequent ones skip
-                         ;; changes closer to (point) then minimal-line-distance.
+                         ;; The first invocation always goes to the
+                         ;; last change, subsequent ones skip changes
+                         ;; closer (to point) than `minimal-line-distance'.
                          (memq last-command '(goto-last-change
                                               goto-last-change-with-auto-marks))
                          (< (count-lines (min position (point-max)) (point))

@@ -84,6 +84,20 @@ With REPEAT non-nil, call it as if repeating the previous command."
         (goto-last-change-test-call t)
         (should (= (point) far))))))
 
+(ert-deftest goto-last-change-test-custom-minimal-line-distance ()
+  "`goto-last-change-minimal-line-distance' sets the default distance."
+  (goto-last-change-test-with-buffer 50
+    (goto-char (goto-last-change-test-line-pos 30))
+    (insert "near")
+    (let ((near (point))
+          (goto-last-change-minimal-line-distance 2))
+      (goto-char (goto-last-change-test-line-pos 33))
+      (insert "last")
+      (goto-char (point-max))
+      (goto-last-change-test-call)
+      (goto-last-change-test-call t)
+      (should (= (point) near)))))
+
 (ert-deftest goto-last-change-test-mark-point ()
   "With MARK-POINT, the mark is set at the starting position."
   (goto-last-change-test-with-buffer 30

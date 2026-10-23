@@ -70,8 +70,14 @@
 (or (fboundp 'last)                     ; Emacs 20
     (require 'cl))                      ; Emacs 19
 
-(defcustom default-minimal-line-distance 10
-  "Movements smaller this amount of lines will be ignored"
+(defgroup goto-last-change nil
+  "Move point through `buffer-undo-list' positions."
+  :group 'convenience)
+
+(defcustom goto-last-change-minimal-line-distance 10
+  "Default minimal line distance for consecutive \\[goto-last-change] calls.
+Consecutive calls skip changes fewer than this many lines from
+point.  The first call always goes to the last change."
   :type 'natnum
   :group 'goto-last-change)
 
@@ -85,14 +91,15 @@
 Consecutive calls set point to the position of the previous change.
 With a prefix arg (optional arg MARK-POINT non-nil), set mark so \
 \\[exchange-point-and-mark]
-will return point to the current position."
+will return point to the current position.
+MINIMAL-LINE-DISTANCE defaults to `goto-last-change-minimal-line-distance'."
   (interactive "P")
   (when (eq buffer-undo-list t)
     (user-error "No undo information in this buffer"))
   (when mark-point
     (push-mark))
   (unless minimal-line-distance
-    (setq minimal-line-distance default-minimal-line-distance))
+    (setq minimal-line-distance goto-last-change-minimal-line-distance))
   (let (position
         undo
         (undo-list (if (and (eq this-command last-command)

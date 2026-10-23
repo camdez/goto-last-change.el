@@ -82,7 +82,7 @@ With a prefix arg (optional arg MARK-POINT non-nil), set mark so \
 will return point to the current position."
   (interactive "P")
   (when (eq buffer-undo-list t)
-    (error "No undo information in this buffer"))
+    (user-error "No undo information in this buffer"))
   (when mark-point
     (push-mark))
   (unless minimal-line-distance
@@ -124,10 +124,10 @@ will return point to the current position."
           ((and (eq this-command last-command)
                 goto-last-change-undo)
            (setq goto-last-change-undo nil)
-           (error "No further undo information"))
+           (user-error "No further undo information"))
           (t
            (setq goto-last-change-undo nil)
-           (error "Buffer not modified")))))
+           (user-error "Buffer not modified")))))
 
 (defun goto-last-change-with-auto-marks (&optional minimal-line-distance)
   "Calls goto-last-change and sets the mark at only the first

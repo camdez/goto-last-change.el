@@ -67,9 +67,6 @@
 
 ;;; Code:
 
-(or (fboundp 'last)                     ; Emacs 20
-    (require 'cl))                      ; Emacs 19
-
 (defgroup goto-last-change nil
   "Move point through `buffer-undo-list' positions."
   :group 'convenience)

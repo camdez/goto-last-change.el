@@ -147,6 +147,7 @@ MINIMAL-LINE-DISTANCE defaults to `goto-last-change-minimal-line-distance'."
            (setq goto-last-change-undo nil)
            (user-error "Buffer not modified")))))
 
+;;;###autoload
 (defun goto-last-change-with-auto-marks (&optional minimal-line-distance)
   "Call `goto-last-change', setting the mark only on the first of a series.
 MINIMAL-LINE-DISTANCE is passed to `goto-last-change'; interactively,

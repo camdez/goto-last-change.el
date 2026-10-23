@@ -122,14 +122,20 @@ With REPEAT non-nil, call it as if repeating the previous command."
                    '(user-error "No undo information in this buffer")))))
 
 (ert-deftest goto-last-change-test-apply-entry ()
-  "`(apply ...)' entries are skipped rather than signaling an error."
-  ;; Fails until PR #2 is merged; drop `:expected-result' then.
-  :expected-result :failed
+  "`(apply FUN-NAME . ARGS)' entries carry no position and are skipped."
   (goto-last-change-test-with-buffer 30
     (setq buffer-undo-list (list '(apply ignore) '(5 . 8)))
     (goto-char (point-max))
     (goto-last-change-test-call)
     (should (= (point) 8))))
+
+(ert-deftest goto-last-change-test-apply-delta-entry ()
+  "`(apply DELTA BEG END FUN-NAME . ARGS)' entries move point to END."
+  (goto-last-change-test-with-buffer 30
+    (setq buffer-undo-list (list '(apply 0 10 20 ignore) '(5 . 8)))
+    (goto-char (point-max))
+    (goto-last-change-test-call)
+    (should (= (point) 20))))
 
 (provide 'goto-last-change-test)
 ;;; goto-last-change-test.el ends here

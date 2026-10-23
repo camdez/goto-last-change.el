@@ -114,7 +114,10 @@ will return point to the current position."
             ((and (consp undo) (null (car undo)))
              ;; (nil PROPERTY VALUE BEG . END)
              (setq position (cdr (last undo))))
-            ((and (listp undo) (eq (car-safe undo) #'apply))) ; (apply ...)
+            ((and (consp undo) (eq (car undo) 'apply))
+             ;; (apply DELTA BEG END FUN-NAME . ARGS) or (apply FUN-NAME . ARGS)
+             (when (integerp (cadr undo))
+               (setq position (nth 3 undo))))
             ((and (consp undo) (markerp (car undo)))) ; (MARKER . DISTANCE)
             ((integerp undo))                         ; POSITION
             ((null undo))                             ; nil

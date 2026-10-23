@@ -150,7 +150,8 @@ MINIMAL-LINE-DISTANCE defaults to `goto-last-change-minimal-line-distance'."
   "Call `goto-last-change', setting the mark only on the first of a series.
 MINIMAL-LINE-DISTANCE is passed to `goto-last-change'; interactively,
 it is the prefix argument."
-  (interactive "P")
+  (interactive (list (and current-prefix-arg
+                          (prefix-numeric-value current-prefix-arg))))
   (goto-last-change (not (or (eq last-command 'goto-last-change-with-auto-marks)
                              (eq last-command t)))
                     minimal-line-distance))

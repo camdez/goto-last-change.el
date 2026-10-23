@@ -98,6 +98,27 @@ With REPEAT non-nil, call it as if repeating the previous command."
       (goto-last-change-test-call t)
       (should (= (point) near)))))
 
+(ert-deftest goto-last-change-test-auto-marks-raw-prefix ()
+  "A raw prefix arg to `goto-last-change-with-auto-marks' is a distance."
+  (goto-last-change-test-with-buffer 50
+    (goto-char (goto-last-change-test-line-pos 5))
+    (insert "far")
+    (goto-char (goto-last-change-test-line-pos 25))
+    (insert "near")
+    (let ((near (point)))
+      (goto-char (goto-last-change-test-line-pos 33))
+      (insert "last")
+      (goto-char (point-max))
+      (let ((this-command 'goto-last-change-with-auto-marks)
+            (last-command 'ignore))
+        (call-interactively #'goto-last-change-with-auto-marks))
+      ;; C-u means a distance of 4, so the change 8 lines away isn't skipped.
+      (let ((this-command 'goto-last-change-with-auto-marks)
+            (last-command 'goto-last-change-with-auto-marks)
+            (current-prefix-arg '(4)))
+        (call-interactively #'goto-last-change-with-auto-marks))
+      (should (= (point) near)))))
+
 (ert-deftest goto-last-change-test-mark-point ()
   "With MARK-POINT, the mark is set at the starting position."
   (goto-last-change-test-with-buffer 30
